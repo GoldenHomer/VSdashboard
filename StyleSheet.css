@@ -1,0 +1,7 @@
+﻿.dashboard {
+    border: 5px solid red;
+    border-radius: 5px;
+    background-color: coral;
+    width: 640px;
+    padding: 5px;
+}
