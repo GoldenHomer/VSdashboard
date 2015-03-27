@@ -38,9 +38,21 @@ drop trigger updatenamesgetnewrecordsappend
 
 go
 create trigger updatenamesgetnewrecordsappend
-on dbo.namestable
+on namestable
 after insert
 	as
 		set identity_insert dbo.salestable on
 		exec addRecords
 		exec Summary
+
+GO
+
+IF OBJECT_ID('deleterecordstrigger') IS NOT NULL
+DROP TRIGGER delterecordstrigger
+GO
+	CREATE TRIGGER deleterecordstrigger
+	ON namestable
+	AFTER DELETE
+		AS
+		EXEC deleterecords
+GO
