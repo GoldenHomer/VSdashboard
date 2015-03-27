@@ -42,4 +42,5 @@ on dbo.namestable
 after insert
 	as
 		set identity_insert dbo.salestable on
-		exec dbo.addRecords
+		exec addRecords
+		exec Summary

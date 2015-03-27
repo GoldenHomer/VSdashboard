@@ -11,4 +11,18 @@ public partial class _Default : System.Web.UI.Page
     {
 
     }
+    protected void DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        if (DropDownList1.SelectedValue == "Pie") {
+            Chart1.Series[0].ChartType = System.Web.UI.DataVisualization.Charting.SeriesChartType.Pie;
+        }
+       
+        else if (DropDownList1.SelectedValue == "Bar"){
+            Chart1.Series[0].ChartType = System.Web.UI.DataVisualization.Charting.SeriesChartType.Bar;
+        }
+
+        else {
+            Chart1.Series[0].ChartType = System.Web.UI.DataVisualization.Charting.SeriesChartType.Line;
+        }
+    }
 }

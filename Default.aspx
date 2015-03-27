@@ -1,5 +1,7 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Default.aspx.cs" Inherits="_Default" %>
 
+<%@ Register Assembly="System.Web.DataVisualization, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" Namespace="System.Web.UI.DataVisualization.Charting" TagPrefix="asp" %>
+
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -16,8 +18,8 @@
 </head>
 <body>
     <form id="form1" runat="server">
-    <div class="dashboard">
-        <asp:DetailsView ID="DetailsView1" runat="server" Height="58px" Width="328px" AllowPaging="True" AutoGenerateRows="False" CellPadding="4" DataKeyNames="empid" DataSourceID="namestableDatasource" ForeColor="#333333" GridLines="None">
+        <div class="dashboard">
+            <asp:DetailsView ID="DetailsView1" runat="server" Height="58px" Width="328px" AllowPaging="True" AutoGenerateRows="False" CellPadding="4" DataKeyNames="empid" DataSourceID="namestableDatasource" ForeColor="#333333" GridLines="None">
             <AlternatingRowStyle BackColor="White" ForeColor="#284775" />
             <CommandRowStyle BackColor="#E2DED6" Font-Bold="True" />
             <EditRowStyle BackColor="#999999" />
@@ -32,7 +34,7 @@
             <PagerStyle BackColor="#284775" ForeColor="White" HorizontalAlign="Center" />
             <RowStyle BackColor="#F7F6F3" ForeColor="#333333" />
         </asp:DetailsView>
-        <asp:SqlDataSource ID="namestableDatasource" runat="server" ConnectionString="<%$ ConnectionStrings:sampConnectionString %>" DeleteCommand="DELETE FROM [namestable] WHERE [empid] = @empid" InsertCommand="INSERT INTO [namestable] ([name]) VALUES (@name)" SelectCommand="SELECT [empid], [name] FROM [namestable]" UpdateCommand="UPDATE [namestable] SET [name] = @name WHERE [empid] = @empid">
+            <asp:SqlDataSource ID="namestableDatasource" runat="server" ConnectionString="<%$ ConnectionStrings:sampConnectionString %>" DeleteCommand="DELETE FROM [namestable] WHERE [empid] = @empid" InsertCommand="INSERT INTO [namestable] ([name]) VALUES (@name)" SelectCommand="SELECT [empid], [name] FROM [namestable]" UpdateCommand="UPDATE [namestable] SET [name] = @name WHERE [empid] = @empid">
             <DeleteParameters>
                 <asp:Parameter Name="empid" Type="Int32" />
             </DeleteParameters>
@@ -45,7 +47,7 @@
             </UpdateParameters>
         </asp:SqlDataSource>
         
-    </div>
+        </div>
         <div class="dashboard">
             <asp:GridView ID="GridView1" runat="server" AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" BackColor="#CCCCCC" BorderColor="#999999" BorderStyle="Solid" BorderWidth="3px" CellPadding="4" CellSpacing="2" DataKeyNames="id" DataSourceID="SqlDataSource1" ForeColor="Black">
                 <Columns>
@@ -84,6 +86,30 @@
                 </SelectParameters>
             </asp:SqlDataSource>
         </div>
+        <div class="dashboard">
+            <!-- needs a data source with table that isn't wanting to work; #74 -->
+            <asp:GridView ID="GridView2" runat="server"></asp:GridView>
+        </div>
+
+        <div class="dashboard">
+            <asp:DropDownList ID="DropDownList1" runat="server" AutoPostBack="True" OnSelectedIndexChanged="DropDownList1_SelectedIndexChanged">
+                <asp:ListItem>Pie</asp:ListItem>
+                <asp:ListItem>Bar</asp:ListItem>
+                <asp:ListItem>Line</asp:ListItem>
+            </asp:DropDownList>
+            <br />
+            <!-- Again, for table that isn't working -->
+            <asp:Chart ID="Chart1" runat="server">
+                <Series>
+                    <asp:Series Name="Series1"></asp:Series>
+                </Series>
+                <ChartAreas>
+                    <asp:ChartArea Name="ChartArea1"></asp:ChartArea>
+                </ChartAreas>
+            </asp:Chart>
+        </div>
+        
+
     </form>
 </body>
 </html>
