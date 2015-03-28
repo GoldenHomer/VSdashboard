@@ -12,7 +12,8 @@
     <link href="StyleSheet.css" rel="stylesheet" />
     <script>
         $(document).ready(function () {
-            $('.dashboard').draggable()
+            $('.dashboard').draggable();
+            $('#insidediv').draggable();
         });
     </script>
 </head>
@@ -59,6 +60,8 @@
                 <ContentTemplate>
                     <asp:GridView ID="GridView1" runat="server" AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" BackColor="#CCCCCC" BorderColor="#999999" BorderStyle="Solid" BorderWidth="3px" CellPadding="4" CellSpacing="2" DataKeyNames="id" DataSourceID="SqlDataSource1" ForeColor="Black">
                         <Columns>
+                            <asp:CommandField ShowSelectButton="True" />
+                            <asp:DynamicField DataField="id" HeaderText="Record ID" />
                             <asp:BoundField DataField="empid" HeaderText="Employee ID" SortExpression="empid" />
                             <asp:TemplateField HeaderText="Date Sold" SortExpression="datesold">
                                 <EditItemTemplate>
@@ -96,6 +99,80 @@
                     </asp:SqlDataSource>
                 </ContentTemplate>
             </asp:UpdatePanel>
+
+            <div id="insidediv">
+                <asp:UpdatePanel ID="UpdatePanel5" runat="server">
+                    <ContentTemplate>
+                        <asp:DetailsView ID="DetailsView2" runat="server" Height="50px" Width="332px" AutoGenerateRows="False" DataKeyNames="id" DataSourceID="SqlDataSource3">
+                            <AlternatingRowStyle BackColor="White" ForeColor="#284775" />
+                            <CommandRowStyle BackColor="#E2DED6" Font-Bold="True" />
+                            <EditRowStyle BackColor="#999999" />
+                            <FieldHeaderStyle BackColor="#E9ECF1" Font-Bold="True" />
+                            <Fields>
+                                <asp:BoundField DataField="id" HeaderText="Record ID" InsertVisible="False" ReadOnly="True" SortExpression="id" />
+                                <asp:BoundField DataField="empid" HeaderText="Employee ID" SortExpression="empid" />
+                                <asp:TemplateField HeaderText="Date Sold" SortExpression="datesold">
+                                    <EditItemTemplate>
+                                        <asp:TextBox ID="TextBox1" runat="server" Text='<%# Bind("datesold", "{0:d}") %>'></asp:TextBox>
+                                    </EditItemTemplate>
+                                    <InsertItemTemplate>
+                                        <asp:TextBox ID="TextBox1" runat="server" Text='<%# Bind("datesold") %>'></asp:TextBox>
+                                    </InsertItemTemplate>
+                                    <ItemTemplate>
+                                        <asp:Label ID="Label1" runat="server" Text='<%# Bind("datesold", "{0:d}") %>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:BoundField DataField="monthonly" HeaderText="Month Sold" SortExpression="monthonly" />
+                                <asp:TemplateField HeaderText="Sale Amount" SortExpression="amount">
+                                    <EditItemTemplate>
+                                        <asp:TextBox ID="TextBox2" runat="server" Text='<%# Bind("amount") %>'></asp:TextBox>
+                                    </EditItemTemplate>
+                                    <InsertItemTemplate>
+                                        <asp:TextBox ID="TextBox2" runat="server" Text='<%# Bind("amount") %>'></asp:TextBox>
+                                    </InsertItemTemplate>
+                                    <ItemTemplate>
+                                        <asp:Label ID="Label2" runat="server" Text='<%# Bind("amount", "{0:C}") %>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:CommandField ShowDeleteButton="True" ShowEditButton="True" ShowInsertButton="True" />
+                            </Fields>
+                            <FooterStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
+                            <HeaderStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
+                            <PagerStyle BackColor="#284775" ForeColor="White" HorizontalAlign="Center" />
+                            <RowStyle BackColor="#F7F6F3" ForeColor="#333333" />
+                        </asp:DetailsView>
+                        <asp:SqlDataSource ID="SqlDataSource3" runat="server" ConflictDetection="CompareAllValues" ConnectionString="<%$ ConnectionStrings:sampConnectionString %>" DeleteCommand="DELETE FROM [salestable] WHERE [id] = @original_id AND (([empid] = @original_empid) OR ([empid] IS NULL AND @original_empid IS NULL)) AND (([monthonly] = @original_monthonly) OR ([monthonly] IS NULL AND @original_monthonly IS NULL)) AND (([amount] = @original_amount) OR ([amount] IS NULL AND @original_amount IS NULL)) AND (([datesold] = @original_datesold) OR ([datesold] IS NULL AND @original_datesold IS NULL))" InsertCommand="INSERT INTO [salestable] ([empid], [monthonly], [amount], [datesold]) VALUES (@empid, @monthonly, @amount, @datesold)" OldValuesParameterFormatString="original_{0}" SelectCommand="SELECT [id], [empid], [monthonly], [amount], [datesold] FROM [salestable] WHERE ([id] = @id)" UpdateCommand="UPDATE [salestable] SET [empid] = @empid, [monthonly] = @monthonly, [amount] = @amount, [datesold] = @datesold WHERE [id] = @original_id AND (([empid] = @original_empid) OR ([empid] IS NULL AND @original_empid IS NULL)) AND (([monthonly] = @original_monthonly) OR ([monthonly] IS NULL AND @original_monthonly IS NULL)) AND (([amount] = @original_amount) OR ([amount] IS NULL AND @original_amount IS NULL)) AND (([datesold] = @original_datesold) OR ([datesold] IS NULL AND @original_datesold IS NULL))">
+                            <DeleteParameters>
+                                <asp:Parameter Name="original_id" Type="Int32" />
+                                <asp:Parameter Name="original_empid" Type="Int32" />
+                                <asp:Parameter Name="original_monthonly" Type="String" />
+                                <asp:Parameter Name="original_amount" Type="Decimal" />
+                                <asp:Parameter DbType="Date" Name="original_datesold" />
+                            </DeleteParameters>
+                            <InsertParameters>
+                                <asp:Parameter Name="empid" Type="Int32" />
+                                <asp:Parameter Name="monthonly" Type="String" />
+                                <asp:Parameter Name="amount" Type="Decimal" />
+                                <asp:Parameter DbType="Date" Name="datesold" />
+                            </InsertParameters>
+                            <SelectParameters>
+                                <asp:ControlParameter ControlID="GridView1" Name="id" PropertyName="SelectedValue" Type="Int32" />
+                            </SelectParameters>
+                            <UpdateParameters>
+                                <asp:Parameter Name="empid" Type="Int32" />
+                                <asp:Parameter Name="monthonly" Type="String" />
+                                <asp:Parameter Name="amount" Type="Decimal" />
+                                <asp:Parameter DbType="Date" Name="datesold" />
+                                <asp:Parameter Name="original_id" Type="Int32" />
+                                <asp:Parameter Name="original_empid" Type="Int32" />
+                                <asp:Parameter Name="original_monthonly" Type="String" />
+                                <asp:Parameter Name="original_amount" Type="Decimal" />
+                                <asp:Parameter DbType="Date" Name="original_datesold" />
+                            </UpdateParameters>
+                        </asp:SqlDataSource>
+                    </ContentTemplate>
+                </asp:UpdatePanel>
+            </div>
         </div>
         <div class="dashboard">
             <!-- needs a data source with table that isn't wanting to work; #74 -->
