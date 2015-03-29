@@ -1,9 +1,18 @@
-﻿.dashboard, #insidediv {
+﻿.dashboard, #insidediv, .dashboardblue, .dashboardazure {
     border: 5px solid red;
     border-radius: 5px;
     background-color: coral;
-    width: 640px;
+    /*width: 640px;*/
     padding: 5px;
+    display:inline-block;
+}
+
+.dashboardblue {
+    background-color: blue;
+}
+
+.dashboardazure {
+    background-color: azure;
 }
 
 #insidediv {
