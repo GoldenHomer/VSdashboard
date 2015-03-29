@@ -1,1 +1,1 @@
-Visual Studio user dashboard
+Visual Studio user dashboard - will try to publish if possible.
