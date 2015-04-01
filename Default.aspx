@@ -12,7 +12,7 @@
     <link href="StyleSheet.css" rel="stylesheet" />
     <script src="JavaScript.js"></script>
 </head>
-<body>
+<body onunload="pageunload()">
     <form id="form1" runat="server">
         <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
         <div class="dashboard" style="background-color:azure; width:100%; margin:20px;">
@@ -215,12 +215,9 @@
                 </asp:UpdatePanel>
             </div>
 
-            <div class="dashboard" style="border:1px; background-color: white; display:table;">
-                <asp:UpdatePanel ID="UpdatePanel7" runat="server">
-                    <ContentTemplate>
-                        <textarea id="TextArea1" cols="20" rows="2" spellcheck="True" placeholder="Notes..."></textarea>
-                    </ContentTemplate>
-                </asp:UpdatePanel>
+            <!-- notes saved with HTML5 local storage (see JS file)-->
+            <div id="sticky" style="border:15px solid white; display:table;">
+                <textarea id="TextArea1" runat="server" cols="20" rows="5" spellcheck="True" placeholder="Notes..."></textarea>
             </div>
         </div>
     </form>
